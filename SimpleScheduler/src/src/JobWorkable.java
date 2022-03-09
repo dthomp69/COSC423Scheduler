@@ -1,4 +1,4 @@
-package scheduler;
+package src;
 
 /**
  * Implementations of this interface are meant to simulate the work of a process

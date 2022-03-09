@@ -1,4 +1,4 @@
-package scheduler;
+package src;
 
 /**
  * <p>Title: Scheduler</p>
