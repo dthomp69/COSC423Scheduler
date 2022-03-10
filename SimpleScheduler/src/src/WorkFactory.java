@@ -24,5 +24,10 @@ public class WorkFactory {
 		 * this method return an instance of a class that I have created (which will
 		 * also implement JobWorkable.)
 		 */
+		ImplementsJobWorkable job = new ImplementsJobWorkable();
+
+		jobCount++;
+
+		return job;
 	}
 }
