@@ -71,10 +71,20 @@ class Submittor extends Thread {
 			String burstDescription; // The description of that Job. (For FCFS this will be a single integer token)
 
 			System.out.println("TO_DO Complete Submittor.run()");
+			System.out.println("Original jobDesc: " + jobDesc);
 			/*
 			 * Provide code that will set id, delay, and burstDescription from jobDesc.
 			 * 
 			 */
+			String jobDescWithNormalizedWhiteSpace = jobDesc.replaceAll("\\s+", " ");
+			String[] jobDescSplit = jobDescWithNormalizedWhiteSpace.split(" ");
+			id = jobDescSplit[0];
+			delay = Integer.parseInt(jobDescSplit[1]);
+
+			// TODO:
+			// What does this mean that it needs to be an Integer token?
+			burstDescription = jobDescSplit[2];
+
 			try {
 				sleep(delay); // wait until submission
 			} catch (InterruptedException e) {

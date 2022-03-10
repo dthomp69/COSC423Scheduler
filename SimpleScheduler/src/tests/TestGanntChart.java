@@ -18,9 +18,10 @@ class TestGanntChart {
 		ganntChart.recordEvent(1100, 1400, "Job Three");
 		ganntChart.recordEvent(1500, 1800, "Job Four");
 
+		ganntChart.end();
+
 		ganntChart.print();
 
-		ganntChart.end();
 	}
 
 }

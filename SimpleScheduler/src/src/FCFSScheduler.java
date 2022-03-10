@@ -1,5 +1,7 @@
 package src;
 
+import java.util.ArrayList;
+
 /**
  * <p>Title: FCFSScheduler</p>
  * <p>Description: Component of the simulate operating system that encapsulates FCFS job scheduling.</p>
@@ -18,20 +20,36 @@ public class FCFSScheduler extends Scheduler {
 	 * methods of Scheduler
 	 */
 
+	// Can't I just stack up an arrayList and pull from the head?
+	ArrayList<Job> queue;
+
+	public FCFSScheduler() {
+		this.queue = new ArrayList<Job>();
+	}
+
 	/**
 	 * If the ready queue is empty, return false. Otherwise, start the next job in
 	 * the queue, returning true. If the queue is empty return false. Make the next
 	 * job in the ready queue run. You should probably invoke Thread.start() on it.
 	 */
 	public boolean makeRun() {
-		System.out.println("TO_DO: makeRun not yet implemented");
+		// System.out.println("TO_DO: makeRun not yet implemented");
+		System.out.println("TO_DO: makeRun in progress");
 
 		/*
 		 * Place code here that gets the next Job from the ready queue and invokes
 		 * start() on it
 		 *
 		 */
-		return true; // TO_DO ***SHOULDN'T ALWAYS RETURN TRUE***
+
+		if (queue.size() == 0) {
+			return false;
+		} else {
+			currentlyRunningJob = queue.get(0);
+			this.remove(currentlyRunningJob);
+			currentlyRunningJob.start();
+			return true; // TO_DO ***SHOULDN'T ALWAYS RETURN TRUE***
+		}
 	}
 
 	/**
@@ -52,19 +70,20 @@ public class FCFSScheduler extends Scheduler {
 
 	@Override
 	public void add(Job J) {
-		// TODO Auto-generated method stub
-
+		this.queue.add(J);
 	}
 
 	@Override
 	public void remove(Job J) {
-		// TODO Auto-generated method stub
-
+		this.queue.remove(J);
 	}
 
 	@Override
 	public boolean hasJobsQueued() {
-		// TODO Auto-generated method stub
-		return false;
+		if (this.queue.size() == 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }
