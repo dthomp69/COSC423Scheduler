@@ -1,5 +1,9 @@
 package src;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -41,8 +45,51 @@ public class GanntChart {
 
 	public void print() {
 		// System.out.println("TO_DO GanntChart.print not yet implemented");
-		System.out.println("TO_DO GanntChart.print work in progress");
-		
+		// System.out.println("TO_DO GanntChart.print work in progress");
+
+		try {
+
+			File file = new File(System.getProperty("user.dir") + "\\src\\src\\" + "GanntChartOut.txt");
+
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
+			FileWriter fileWriter = new FileWriter(file, true);
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+			bufferedWriter.write("Gannt Chart:");
+			bufferedWriter.newLine();
+
+			bufferedWriter.write("BurstStart" + " " + "BurstEnd" + " " + "Job:");
+			bufferedWriter.newLine();
+
+			// Need to go through and add gap events to fill out the Gannt Chart.
+			for (int i = 0; i < this.events.size(); i++) {
+				if ((i + 1) < this.events.size()) {
+					if (this.events.get(i).endTime < this.events.get(i + 1).startTime) {
+						GanntRecord gapRecord = new GanntRecord(this.events.get(i).endTime,
+								this.events.get(i + 1).startTime, "IDLE");
+						this.events.add(i + 1, gapRecord);
+					}
+				}
+			}
+
+			for (int i = 0; i < this.events.size(); i++) {
+				System.out.println(this.events.get(i).startTime + " " + this.events.get(i).endTime + " "
+						+ this.events.get(i).eventDescriptor);
+				bufferedWriter.write(this.events.get(i).startTime + " " + this.events.get(i).endTime + " "
+						+ this.events.get(i).eventDescriptor);
+				bufferedWriter.newLine();
+			}
+			// Add a line so that subsequent runs get added with a gap
+			bufferedWriter.newLine();
+
+			bufferedWriter.close();
+
+		} catch (IOException e) {
+			System.out.println("Problem writing to GanntOut");
+		}
 	}
 
 	/**
