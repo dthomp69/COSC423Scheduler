@@ -12,6 +12,8 @@ import java.util.ArrayList;
  */
 
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class FCFSScheduler extends Scheduler {
 
@@ -23,8 +25,12 @@ public class FCFSScheduler extends Scheduler {
 	// Can't I just stack up an arrayList and pull from the head?
 	ArrayList<Job> queue;
 
+	Condition waiting;
+
 	public FCFSScheduler() {
 		this.queue = new ArrayList<Job>();
+
+		this.waiting = new ReentrantLock().newCondition();
 	}
 
 	/**
@@ -58,19 +64,41 @@ public class FCFSScheduler extends Scheduler {
 	 * queue.
 	 */
 	public void blockTilThereIsAJob() {
-		if (hasRunningJob())
+		if (hasRunningJob()) {
 			return;
-		System.out.println("TO_DO: blockTilThereIsAJob not yet implemented");
+		}
+		// System.out.println("TO_DO: blockTilThereIsAJob not yet implemented");
+		System.out.println("TO_DO: blockTilThereIsAJob in progress");
+
 		/*
 		 * Place code here that will cause the calling thread to block until the ready
 		 * queue contains a Job
 		 */
+//		try {
+//			wait();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+
+		// This would work if you knew when there were no more jobs to run.
+//		while (this.queue.size() == 0) {
+//		}
+		synchronized (this.waiting) {
+			try {
+				this.waiting.await();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 		System.out.println("evidently there is now a job on readyQ");
 	}
 
 	@Override
 	public void add(Job J) {
 		this.queue.add(J);
+		synchronized (this.waiting) {
+			this.waiting.signal();
+		}
 	}
 
 	@Override
