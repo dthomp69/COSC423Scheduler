@@ -76,9 +76,11 @@ public class GanntChart {
 			}
 
 			for (int i = 0; i < this.events.size(); i++) {
-				System.out.println(this.events.get(i).startTime + " " + this.events.get(i).endTime + " "
+				System.out.println((this.events.get(i).startTime - this.systemStartTime) + " "
+						+ (this.events.get(i).endTime - this.systemStartTime) + " "
 						+ this.events.get(i).eventDescriptor);
-				bufferedWriter.write(this.events.get(i).startTime + " " + this.events.get(i).endTime + " "
+				bufferedWriter.write((this.events.get(i).startTime - this.systemStartTime) + " "
+						+ (this.events.get(i).endTime - this.systemStartTime) + " "
 						+ this.events.get(i).eventDescriptor);
 				bufferedWriter.newLine();
 			}

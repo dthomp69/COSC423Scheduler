@@ -83,22 +83,44 @@ public class FCFSScheduler extends Scheduler {
 		// This would work if you knew when there were no more jobs to run.
 //		while (this.queue.size() == 0) {
 //		}
-		synchronized (this.waiting) {
-			try {
-				this.waiting.await();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+
+//		synchronized (this.waiting) {
+//			try {
+//				this.waiting.await();
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//
+//		while (this.queue.size() == 0) {
+//			try {
+//				wait();
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
+
+//		while (this.queue.size() == 0) {
+//
+//		}
+
+		int sleepTime = (int) (5 * Math.random());
+		try {
+			Thread.sleep(sleepTime * 1000);
+		} catch (InterruptedException e) {
 		}
 		System.out.println("evidently there is now a job on readyQ");
+//		return;
+
 	}
 
 	@Override
-	public void add(Job J) {
+	public synchronized void add(Job J) {
 		this.queue.add(J);
-		synchronized (this.waiting) {
-			this.waiting.signal();
-		}
+//		synchronized (this.waiting) {
+//			this.waiting.signal();
+//		}
+		notify();
 	}
 
 	@Override
