@@ -63,7 +63,7 @@ public class FCFSScheduler extends Scheduler {
 	 * to run. Will block if the ready queue is empty until a Job is added to the
 	 * queue.
 	 */
-	public void blockTilThereIsAJob() {
+	public synchronized void blockTilThereIsAJob() {
 		if (hasRunningJob()) {
 			return;
 		}
@@ -104,10 +104,18 @@ public class FCFSScheduler extends Scheduler {
 //
 //		}
 
-		int sleepTime = (int) (5 * Math.random());
-		try {
-			Thread.sleep(sleepTime * 1000);
-		} catch (InterruptedException e) {
+//		int sleepTime = (int) (5 * Math.random());
+//		try {
+//			Thread.sleep(sleepTime * 1000);
+//		} catch (InterruptedException e) {
+//		}
+
+		while (this.queue.size() == 0) {
+			try {
+				this.waiting.await();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		System.out.println("evidently there is now a job on readyQ");
 //		return;
@@ -120,11 +128,12 @@ public class FCFSScheduler extends Scheduler {
 //		synchronized (this.waiting) {
 //			this.waiting.signal();
 //		}
-		notify();
+//		notify();
+		this.waiting.signal();
 	}
 
 	@Override
-	public void remove(Job J) {
+	public synchronized void remove(Job J) {
 		this.queue.remove(J);
 	}
 
