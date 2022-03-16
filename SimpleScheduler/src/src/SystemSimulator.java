@@ -28,6 +28,9 @@ class SystemSimulator extends Thread {
 	private final ReentrantLock singleThreadMutex; // Used to guarantee that only
 	// ...one of either the OS or any Job thread is running at any one time.
 
+	private ReentrantLock submittorLock;
+	private Condition waiting;
+
 	// Used to store information to create a Gannt chart
 	private final GanntChart chart = new GanntChart();
 
@@ -48,6 +51,12 @@ class SystemSimulator extends Thread {
 	public SystemSimulator(Scheduler s) {
 		singleThreadMutex = new ReentrantLock();
 		myScheduler = s;
+
+		this.submittorLock = new ReentrantLock();
+		this.waiting = this.submittorLock.newCondition();
+
+		((FCFSScheduler) this.myScheduler).giveCondition(this.waiting);
+		((FCFSScheduler) this.myScheduler).giveLock(this.submittorLock);
 	}
 
 	/*
@@ -165,4 +174,11 @@ class SystemSimulator extends Thread {
 		jobsRemainToBeSubmitted = false;
 	}
 
+	public Condition getSubmittorCondition() {
+		return this.waiting;
+	}
+
+	public ReentrantLock getSubmittorLock() {
+		return this.submittorLock;
+	}
 }

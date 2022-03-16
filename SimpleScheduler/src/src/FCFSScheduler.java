@@ -26,11 +26,12 @@ public class FCFSScheduler extends Scheduler {
 	ArrayList<Job> queue;
 
 	Condition waiting;
+	ReentrantLock submittorLock;
 
 	public FCFSScheduler() {
 		this.queue = new ArrayList<Job>();
 
-		this.waiting = new ReentrantLock().newCondition();
+//		this.waiting = new ReentrantLock().newCondition();
 	}
 
 	/**
@@ -67,6 +68,10 @@ public class FCFSScheduler extends Scheduler {
 		if (hasRunningJob()) {
 			return;
 		}
+		if (this.hasJobs()) {
+			return;
+		}
+
 		// System.out.println("TO_DO: blockTilThereIsAJob not yet implemented");
 		System.out.println("TO_DO: blockTilThereIsAJob in progress");
 
@@ -110,26 +115,48 @@ public class FCFSScheduler extends Scheduler {
 //		} catch (InterruptedException e) {
 //		}
 
-		while (this.queue.size() == 0) {
-			try {
-				this.waiting.await();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+//		while (this.queue.size() == 0) {
+//			try {
+//				this.waiting.await();
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
+
+//		synchronized (this.waiting) {
+//			try {
+//				this.wait();
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+
+		try {
+			System.out.println("Waiting for condition to be signalled");
+			this.submittorLock.lock();
+			this.waiting.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		this.submittorLock.unlock();
 		System.out.println("evidently there is now a job on readyQ");
 //		return;
 
 	}
 
 	@Override
-	public synchronized void add(Job J) {
+	public void add(Job J) {
 		this.queue.add(J);
 //		synchronized (this.waiting) {
 //			this.waiting.signal();
 //		}
 //		notify();
+		this.submittorLock.lock();
 		this.waiting.signal();
+		this.submittorLock.unlock();
+
 	}
 
 	@Override
@@ -144,5 +171,13 @@ public class FCFSScheduler extends Scheduler {
 		} else {
 			return true;
 		}
+	}
+
+	public void giveCondition(Condition cond) {
+		this.waiting = cond;
+	}
+
+	public void giveLock(ReentrantLock waiting2) {
+		this.submittorLock = waiting2;
 	}
 }

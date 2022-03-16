@@ -2,6 +2,8 @@ package src;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * <p>
@@ -31,6 +33,9 @@ class Submittor extends Thread {
 
 	private StringTokenizer st; // tokenizer used to parse string
 
+	private Condition waiting;
+	private ReentrantLock submittorLock;
+
 	/**
 	 * @param jobDescriptions = an array of Strings, each a line from the input
 	 *                        file. The syntax of this string will vary depending on
@@ -55,6 +60,9 @@ class Submittor extends Thread {
 		myJobDescs = jobDescriptions;
 		mySystem = s;
 		myWorkCreator = progenitor;
+
+		this.waiting = mySystem.getSubmittorCondition();
+		this.submittorLock = mySystem.getSubmittorLock();
 	}
 
 	/*
@@ -93,6 +101,8 @@ class Submittor extends Thread {
 			}
 			// create jobs and add them to the Operating System
 			mySystem.AddNewProcess(id, burstDescription, myWorkCreator.createWork());
+
+//			this.waiting.signal();
 		}
 		mySystem.noMoreJobsToSubmit(); // let system know that no more jobs are coming
 	}
