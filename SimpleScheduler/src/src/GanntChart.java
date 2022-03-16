@@ -76,13 +76,36 @@ public class GanntChart {
 			}
 
 			for (int i = 0; i < this.events.size(); i++) {
-				System.out.println((this.events.get(i).startTime - this.systemStartTime) + " "
-						+ (this.events.get(i).endTime - this.systemStartTime) + " "
-						+ this.events.get(i).eventDescriptor);
-				bufferedWriter.write((this.events.get(i).startTime - this.systemStartTime) + " "
-						+ (this.events.get(i).endTime - this.systemStartTime) + " "
-						+ this.events.get(i).eventDescriptor);
-				bufferedWriter.newLine();
+				if ((i + 1) < this.events.size()) {
+					if (this.events.get(i).eventDescriptor.equals("IDLE")
+							&& this.events.get(i + 1).eventDescriptor.equals("IDLE")) {
+						System.out.println((this.events.get(i).startTime - this.systemStartTime) + " "
+								+ (this.events.get(i + 1).endTime - this.systemStartTime) + " "
+								+ this.events.get(i).eventDescriptor);
+						bufferedWriter.write((this.events.get(i).startTime - this.systemStartTime) + " "
+								+ (this.events.get(i + 1).endTime - this.systemStartTime) + " "
+								+ this.events.get(i).eventDescriptor);
+						bufferedWriter.newLine();
+						i++;
+					} else {
+						System.out.println((this.events.get(i).startTime - this.systemStartTime) + " "
+								+ (this.events.get(i).endTime - this.systemStartTime) + " "
+								+ this.events.get(i).eventDescriptor);
+						bufferedWriter.write((this.events.get(i).startTime - this.systemStartTime) + " "
+								+ (this.events.get(i).endTime - this.systemStartTime) + " "
+								+ this.events.get(i).eventDescriptor);
+						bufferedWriter.newLine();
+					}
+				} else {
+
+					System.out.println((this.events.get(i).startTime - this.systemStartTime) + " "
+							+ (this.events.get(i).endTime - this.systemStartTime) + " "
+							+ this.events.get(i).eventDescriptor);
+					bufferedWriter.write((this.events.get(i).startTime - this.systemStartTime) + " "
+							+ (this.events.get(i).endTime - this.systemStartTime) + " "
+							+ this.events.get(i).eventDescriptor);
+					bufferedWriter.newLine();
+				}
 			}
 			// Add a line so that subsequent runs get added with a gap
 			bufferedWriter.newLine();
