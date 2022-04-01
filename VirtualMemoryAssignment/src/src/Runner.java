@@ -29,6 +29,16 @@ public class Runner {
 				ArrayList<ArrayList<Page>> pages = fileReader.getPages();
 
 				// Now hand this information off to the algorithms:
+				// Do a separate run of all for, for each of the sample input strings.
+				// We can see how many input strings there are by checking the size of the
+				// numberOfFrames ArrayList.
+				for (int i = 0; i < numberOfFrames.size(); i++) {
+					int frameNumber = numberOfFrames.get(i);
+					ArrayList<Page> run = pages.get(i);
+
+					// First, FIFO
+					FirstInFirstOut FIFO = new FirstInFirstOut(frameNumber, run);
+				}
 			} else {
 				System.out.println("FileReader couldn't process the file.");
 			}
