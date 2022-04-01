@@ -24,6 +24,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *          time to time. It will run at a higher priority than any Jobs, but
  *          lower than the SystemSimulator.
  */
+/* Daniel Thompson, COSC 423 Simple Scheduler assignment. */
 
 class Submittor extends Thread {
 	// three items needed to create processes in the system

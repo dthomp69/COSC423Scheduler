@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import src.GanntChart;
+/* Daniel Thompson, COSC 423 Simple Scheduler assignment. */
 
 class TestGanntChart {
 

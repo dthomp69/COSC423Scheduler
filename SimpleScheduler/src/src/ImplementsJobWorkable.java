@@ -1,5 +1,7 @@
 package src;
 
+/* Daniel Thompson, COSC 423 Simple Scheduler assignment. */
+
 public class ImplementsJobWorkable implements JobWorkable {
 
 	public ImplementsJobWorkable() {

@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
+/* Daniel Thompson, COSC 423 Simple Scheduler assignment. */
 public class FCFSScheduler extends Scheduler {
 
 	/*

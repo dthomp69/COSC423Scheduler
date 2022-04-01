@@ -13,6 +13,9 @@ package src;
  *          </p>
  *
  */
+
+/* Daniel Thompson, COSC 423 Simple Scheduler assignment. */
+
 public class WorkFactory {
 	private int jobCount = 0;
 

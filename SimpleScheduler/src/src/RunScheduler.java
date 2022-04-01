@@ -31,6 +31,8 @@ import java.util.ArrayList;
  * @version 2.0 The main driver for the project.
  */
 
+/* Daniel Thompson, COSC 423 Simple Scheduler assignment. */
+
 public class RunScheduler {
 
 	private final static String INPUT_FILE_NAME = "scheduleInput.txt"; // filename
@@ -61,7 +63,8 @@ public class RunScheduler {
 	public static void getJobsFromFile(ArrayList<String> listOfLines) {
 		Scanner fileIn = null; // (Initialization keeps compiler happy)
 		try { // open file
-			fileIn = new Scanner(new FileInputStream(System.getProperty("user.dir") + "\\src\\src\\" + INPUT_FILE_NAME));
+			fileIn = new Scanner(
+					new FileInputStream(System.getProperty("user.dir") + "\\src\\src\\" + INPUT_FILE_NAME));
 		} catch (FileNotFoundException e) {
 			System.out.println("Input file " + INPUT_FILE_NAME + " not found. ");
 			System.exit(1);

@@ -21,6 +21,8 @@ import java.util.ArrayList;
  * @version 2.0 simulates the scheduler
  */
 
+/* Daniel Thompson, COSC 423 Simple Scheduler assignment. */
+
 public class GanntChart {
 	private long systemStartTime; // wall time when the Gannt chart starts. Is used
 									// to display all timings as relative to this time

@@ -21,6 +21,8 @@ import java.util.concurrent.locks.Condition;
  * @version 2.0 extends Thread: this class simulates the kernel.
  */
 
+/* Daniel Thompson, COSC 423 Simple Scheduler assignment. */
+
 class SystemSimulator extends Thread {
 	private static final int ILLEGAL_TERMINATION = -20;
 	private final Scheduler myScheduler; // scheduler for jobs
