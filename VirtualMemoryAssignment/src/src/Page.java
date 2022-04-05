@@ -4,11 +4,16 @@ public class Page {
 
 	private int pageNumber;
 
+	// For FIFO
 	private int timePutIn;
+
+	// For LRU
+	private int lastTimeUsed;
 
 	public Page(int nextInt) {
 		this.setPageNumber(nextInt);
 		this.setTimePutIn(-1);
+		this.setLastTimeUsed(-1);
 	}
 
 	public int getPageNumber() {
@@ -35,6 +40,14 @@ public class Page {
 		} else {
 			return false;
 		}
+	}
+
+	public int getLastTimeUsed() {
+		return lastTimeUsed;
+	}
+
+	public void setLastTimeUsed(int lastTimeUsed) {
+		this.lastTimeUsed = lastTimeUsed;
 	}
 
 }

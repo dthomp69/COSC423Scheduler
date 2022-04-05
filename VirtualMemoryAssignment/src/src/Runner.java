@@ -51,6 +51,9 @@ public class Runner {
 					FIFO.printStoredFrames();
 
 					// Second, LRU
+					LeastRecentlyUsed LRU = new LeastRecentlyUsed(frameNumber, run);
+					LRU.run();
+					LRU.printStoredFrames();
 
 				}
 			} else {
