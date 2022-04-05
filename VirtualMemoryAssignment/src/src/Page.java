@@ -10,10 +10,14 @@ public class Page {
 	// For LRU
 	private int lastTimeUsed;
 
+	// For LFU
+	private int timesUsed;
+
 	public Page(int nextInt) {
 		this.setPageNumber(nextInt);
 		this.setTimePutIn(-1);
 		this.setLastTimeUsed(-1);
+		this.setTimesUsed(1);
 	}
 
 	public int getPageNumber() {
@@ -48,6 +52,18 @@ public class Page {
 
 	public void setLastTimeUsed(int lastTimeUsed) {
 		this.lastTimeUsed = lastTimeUsed;
+	}
+
+	public int getTimesUsed() {
+		return timesUsed;
+	}
+
+	public void setTimesUsed(int timesUsed) {
+		this.timesUsed = timesUsed;
+	}
+
+	public void incrementTimesUsed() {
+		this.timesUsed++;
 	}
 
 }

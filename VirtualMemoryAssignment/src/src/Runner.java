@@ -55,6 +55,11 @@ public class Runner {
 					LRU.run();
 					LRU.printStoredFrames();
 
+					// Thirdly, LFU
+					LeastFrequentlyUsed LFU = new LeastFrequentlyUsed(frameNumber, run);
+					LFU.run();
+					LFU.printStoredFrames();
+
 					// Lastly, Optimal
 					Optimal optimal = new Optimal(frameNumber, run);
 					optimal.run();
