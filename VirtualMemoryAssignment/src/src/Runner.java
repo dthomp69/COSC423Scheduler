@@ -55,6 +55,10 @@ public class Runner {
 					LRU.run();
 					LRU.printStoredFrames();
 
+					// Lastly, Optimal
+					Optimal optimal = new Optimal(frameNumber, run);
+					optimal.run();
+					optimal.printStoredFrames();
 				}
 			} else {
 				System.out.println("FileReader couldn't process the file.");
