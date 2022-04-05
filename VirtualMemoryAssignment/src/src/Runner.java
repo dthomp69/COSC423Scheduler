@@ -17,10 +17,12 @@ public class Runner {
 		System.out.println("What is the name of the file you would like to find?");
 		String fileNameInput = scanner.nextLine();
 		System.out.println("Looking for file: " + fileNameInput);
+		System.out.println();
 
 		boolean foundFile = fileReader.findFile(fileNameInput);
 		if (foundFile) {
 			System.out.println("Found the file.");
+			System.out.println();
 
 			boolean processedFile = fileReader.processInputsFromFile(fileNameInput);
 			if (processedFile) {
@@ -36,8 +38,20 @@ public class Runner {
 					int frameNumber = numberOfFrames.get(i);
 					ArrayList<Page> run = pages.get(i);
 
+					System.out.println("Running input string: ");
+					for (int j = 0; j < run.size(); j++) {
+						System.out.print(run.get(j).getPageNumber() + " ");
+					}
+					System.out.println();
+					System.out.println();
+
 					// First, FIFO
 					FirstInFirstOut FIFO = new FirstInFirstOut(frameNumber, run);
+					FIFO.run();
+					FIFO.printStoredFrames();
+
+					// Second, LRU
+
 				}
 			} else {
 				System.out.println("FileReader couldn't process the file.");
