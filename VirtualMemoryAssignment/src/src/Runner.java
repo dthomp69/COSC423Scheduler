@@ -38,8 +38,26 @@ public class Runner {
 					int frameNumber = numberOfFrames.get(i);
 					ArrayList<Page> run = pages.get(i);
 
+//					System.out.println("Running input string: ");
+//					
+//					for (int j = 0; j < run.size(); j++) {
+//						System.out.print(run.get(j).getPageNumber() + " ");
+//					}
+//					System.out.println();
+//					System.out.println();
 					System.out.println("Running input string: ");
-					for (int j = 0; j < run.size(); j++) {
+
+					int relativeSize = run.size();
+
+					while (relativeSize > 40) {
+
+						for (int j = 0; j < 40; j++) {
+							System.out.print(run.get(j).getPageNumber() + " ");
+						}
+						System.out.println();
+						relativeSize -= 40;
+					}
+					for (int j = 0; j < relativeSize; j++) {
 						System.out.print(run.get(j).getPageNumber() + " ");
 					}
 					System.out.println();

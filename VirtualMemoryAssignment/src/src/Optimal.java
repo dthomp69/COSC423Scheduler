@@ -110,7 +110,63 @@ public class Optimal {
 	}
 
 	public void printStoredFrames() {
-		int lengthOfInput = this.inputs.size();
+		int realLengthOfInput = this.inputs.size();
+		while (realLengthOfInput > 40) {
+			int lengthOfInput = 40;
+
+			// Print out the input string
+			for (int i = 0; i < lengthOfInput; i++) {
+				System.out.print(this.inputs.get(i).getPageNumber() + " ");
+			}
+			System.out.println();
+
+			// Print out a filler line
+			for (int i = 0; i < lengthOfInput; i++) {
+				System.out.print("__");
+			}
+			System.out.println();
+
+			// Print out the stored frames
+			for (int j = 0; j < this.frames.length; j++) {
+				int lastPrinted0 = -1;
+				int lastPrinted1 = -1;
+				int lastPrinted2 = -1;
+				for (int i = 0; i < lengthOfInput; i++) {
+					if (this.storedFrames.get(i)[j].getPageNumber() == -1) {
+						System.out.print(0 + " ");
+					} else {
+						boolean shouldPrint = true;
+						for (int k = 0; k < this.storedFrames.get(i).length; k++) {
+							if (this.storedFrames.get(i)[0].getPageNumber() == lastPrinted0
+									&& this.storedFrames.get(i)[1].getPageNumber() == lastPrinted1
+									&& this.storedFrames.get(i)[2].getPageNumber() == lastPrinted2) {
+								shouldPrint = false;
+							}
+						}
+						if (shouldPrint) {
+
+							System.out.print(this.storedFrames.get(i)[j].getPageNumber() + " ");
+							if (j == 0) {
+								lastPrinted0 = this.storedFrames.get(i)[j].getPageNumber();
+							}
+							if (j == 1) {
+								lastPrinted1 = this.storedFrames.get(i)[j].getPageNumber();
+							}
+							if (j == 2) {
+								lastPrinted2 = this.storedFrames.get(i)[j].getPageNumber();
+							}
+						} else {
+							System.out.print("  ");
+						}
+					}
+				}
+				System.out.println();
+			}
+			System.out.println();
+
+			realLengthOfInput -= 40;
+		}
+		int lengthOfInput = realLengthOfInput;
 
 		// Print out the input string
 		for (int i = 0; i < lengthOfInput; i++) {
@@ -161,7 +217,6 @@ public class Optimal {
 			System.out.println();
 		}
 		System.out.println();
-
 	}
 
 }
