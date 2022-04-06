@@ -199,4 +199,22 @@ public class FirstInFirstOut {
 		System.out.println();
 	}
 
+	public int calculatePageFaults() {
+		int faults = 0;
+		for (int i = 0; i < this.storedFrames.size(); i++) {
+			boolean untrackedFault = true;
+			for (int j = 0; j < this.frames.length; j++) {
+				if (i + 1 != this.storedFrames.size()) {
+					if (storedFrames.get(i)[j].getPageNumber() != storedFrames.get(i + 1)[j].getPageNumber()) {
+						if (untrackedFault) {
+							faults++;
+							untrackedFault = false;
+						}
+					}
+				}
+			}
+		}
+		return faults;
+	}
+
 }

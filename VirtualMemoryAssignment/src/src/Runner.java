@@ -67,21 +67,38 @@ public class Runner {
 					FirstInFirstOut FIFO = new FirstInFirstOut(frameNumber, run);
 					FIFO.run();
 					FIFO.printStoredFrames();
+					int FIFOfaults = FIFO.calculatePageFaults();
 
 					// Second, LRU
 					LeastRecentlyUsed LRU = new LeastRecentlyUsed(frameNumber, run);
 					LRU.run();
 					LRU.printStoredFrames();
+					int LRUfaults = LRU.calculatePageFaults();
 
 					// Thirdly, LFU
 					LeastFrequentlyUsed LFU = new LeastFrequentlyUsed(frameNumber, run);
 					LFU.run();
 					LFU.printStoredFrames();
+					int LFUfaults = LFU.calculatePageFaults();
 
 					// Lastly, Optimal
 					Optimal optimal = new Optimal(frameNumber, run);
 					optimal.run();
 					optimal.printStoredFrames();
+					int optimalFaults = optimal.calculatePageFaults();
+
+					double fifoPercent = (((double) FIFOfaults / (double) optimalFaults) * 100);
+					double lrupercent = (((double) LRUfaults / (double) optimalFaults) * 100);
+					double lfupercent = (((double) LFUfaults / (double) optimalFaults) * 100);
+
+					System.out.println("|Algo|" + "|Number of faults|" + "|%Optimal|");
+					System.out.println("FIFO Faults: " + FIFOfaults + " " + fifoPercent + "%");
+					System.out.println("LRU Faults: " + LRUfaults + " " + lrupercent + "%");
+					System.out.println("LFU Faults: " + LFUfaults + " " + lfupercent + "%");
+					System.out.println("Optimal Faults: " + optimalFaults + " " + "100%");
+					System.out.println();
+					System.out.println();
+
 				}
 			} else {
 				System.out.println("FileReader couldn't process the file.");
